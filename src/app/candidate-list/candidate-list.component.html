@@ -5,17 +5,19 @@
 		<th scope="col">#</th>
 		<th scope="col" sortable="firstName" (sort)="onSort($event)">First Name</th>
 		<th scope="col" sortable="lastName" (sort)="onSort($event)">Last name</th>
-		<th scope="col" sortable="department" (sort)="onSort($event)">Phone</th>
-		<th scope="col" sortable="department" (sort)="onSort($event)">Mail</th>
+		<th scope="col" sortable="phone" (sort)="onSort($event)">Phone</th>
+		<th scope="col" sortable="mail" (sort)="onSort($event)">Mail</th>
+		<th scope="col" sortable="skype" (sort)="onSort($event)">Skype</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let candidate of Candidates" (click)="candidateDetails(candidate)">
+		<tr *ngFor="let candidate of candidates" (click)="candidateDetails(candidate)">
 			<th scope="row">{{ candidate.id }}</th>
 			<td><ngb-highlight [result]="candidate.firstName"></ngb-highlight></td>
 			<td><ngb-highlight [result]="candidate.lastName"></ngb-highlight></td>
 			<td><ngb-highlight [result]="candidate.telephone"></ngb-highlight></td>
-			<td><ngb-highlight [result]="candidate.mail"></ngb-highlight></td>
+      <td><ngb-highlight [result]="candidate.mail"></ngb-highlight></td>
+			<td><ngb-highlight [result]="candidate.skype"></ngb-highlight></td>
 		</tr>
 	</tbody>
 </table>

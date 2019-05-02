@@ -19,6 +19,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
+import { CreateCandidateComponent } from './create-candidate/create-candidate.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CalendarHeaderComponent } from './calendar-header/calendar-header.compo
     EmployeeListComponent,
     CandidateListComponent,
     CalendarComponent,
-    CalendarHeaderComponent
+    CalendarHeaderComponent,
+    CreateCandidateComponent
   ],
   imports: [
 	CommonModule,

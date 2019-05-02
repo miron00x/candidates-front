@@ -16,7 +16,7 @@ export class CandidateListComponent implements OnInit {
   candidates: Observable<Candidate[]>;
   total: number = 1;
   pageNumber: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 4;
   sortColumn: string = 'id';
   sortDirection: string = 'NULL';
   error: String;

@@ -15,7 +15,7 @@ export class EmployeeListComponent implements OnInit {
   employees: Observable<Employee[]>;
   total: number = 1;
   pageNumber: number = 1;
-  pageSize: number = 2;
+  pageSize: number = 4;
   sortColumn: string = 'id';
   sortDirection: string = 'NULL';
   error: String;
@@ -33,6 +33,7 @@ export class EmployeeListComponent implements OnInit {
   
   onSort({column, direction}: SortEvent) {
     // resetting other headers
+    alert("onSort " + column + " " + direction);
     this.headers.forEach(header => {
       if (header.sortable !== column) {
         header.direction = 'NULL';
@@ -41,7 +42,8 @@ export class EmployeeListComponent implements OnInit {
 
     this.sortColumn = column;
     this.sortDirection = direction;
-	  this.reloadData();
+    this.reloadData();
+    alert("After onSort");
   }
  
   ngOnInit() {

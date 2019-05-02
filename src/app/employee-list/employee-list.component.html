@@ -13,7 +13,7 @@
 			<th scope="row">{{ employee.id }}</th>
 			<td><ngb-highlight [result]="employee.firstName"></ngb-highlight></td>
 			<td><ngb-highlight [result]="employee.lastName"></ngb-highlight></td>
-			<td><ngb-highlight [result]="employee.department"></ngb-highlight></td>
+			<td><ngb-highlight [result]="employee.department.departmentName"></ngb-highlight></td>
 		</tr>
 	</tbody>
 </table>

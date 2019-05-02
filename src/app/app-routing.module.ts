@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreateEmployeeComponent } from './create-employee/create-employee.component';
+import { CreateCandidateComponent } from './create-candidate/create-candidate.component';
 import { AuthGuard } from './guard/auth.guard';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { CandidateListComponent } from './candidate-list/candidate-list.component';
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
   { path: 'create-employee', component: CreateEmployeeComponent, canActivate: [AuthGuard] },
   { path: 'employee-list', component: EmployeeListComponent, canActivate: [AuthGuard] },
-  { path: 'candidate-list', component: CandidateListComponent, canActivate: [AuthGuard] }
+  { path: 'candidate-list', component: CandidateListComponent, canActivate: [AuthGuard] },
+  { path: 'create-candidate', component: CreateCandidateComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

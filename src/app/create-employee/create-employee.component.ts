@@ -64,21 +64,6 @@ export class CreateEmployeeComponent implements OnInit {
     this.employee.department = this.selectedDepartment;
     this.employeeService.createEmployee(this.employee)
       .subscribe(data => this.setMessage(data), error => this.setError(error));
-		/*if(!this.file_id){
-			this.documentService.createDocument(this.file)
-			.subscribe((response: Document) => {
-				if (response) {
-					this.setMessage(response.docName);
-				} 
-			}, error => this.setError(error));
-		} else {
-			this.documentService.updateDocument(this.file_id, this.file)
-			.subscribe((response: Document) => {
-				if (response) {
-					this.setMessage(response.docName);
-				} 
-			}, error => this.setError(error));
-    }*/
     this.router.navigate(['/employee-list']);
 	}
 	

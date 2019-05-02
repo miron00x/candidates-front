@@ -17,7 +17,7 @@ export class CandidateService {
 	}
 
 	createCandidate(candidate: Candidate): Observable<any> {
-		const req = new HttpRequest('POST', `${this.baseUrl}/create`, candidate);
+		const req = new HttpRequest('PUT', `${this.baseUrl}`, candidate);
 		let result = this.http.request(req);
 		return result;
 	}
