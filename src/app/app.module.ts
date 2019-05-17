@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +21,14 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar-header/calendar-header.component';
 import { CreateCandidateComponent } from './create-candidate/create-candidate.component';
 
+import { FlatpickrModule } from 'angularx-flatpickr';
+import 'flatpickr/dist/flatpickr.css';
+import { CreateInterviewComponent } from './create-interview/create-interview.component';
+
+import { NgSelectModule } from '@ng-select/ng-select';
+import { EditInterviewComponent } from './edit-interview/edit-interview.component';
+import { InterviewListComponent } from './interview-list/interview-list.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,21 +37,27 @@ import { CreateCandidateComponent } from './create-candidate/create-candidate.co
     CandidateListComponent,
     CalendarComponent,
     CalendarHeaderComponent,
-    CreateCandidateComponent
+    CreateCandidateComponent,
+    CreateInterviewComponent,
+    EditInterviewComponent,
+    InterviewListComponent
   ],
   imports: [
-	CommonModule,
+	  CommonModule,
     BrowserModule,
     NgbModule,
     AppRoutingModule,
 	  FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-	  BrowserAnimationsModule,
+    BrowserAnimationsModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
-    })
+    }),
+    NgSelectModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue : '/' },

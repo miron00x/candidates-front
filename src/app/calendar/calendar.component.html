@@ -1,36 +1,121 @@
-<app-calendar-header [(view)]="view" [(viewDate)]="viewDate">
-</app-calendar-header>
-<div class="alert alert-info">
-  <div [ngSwitch]="view">
-    <span *ngSwitchCase="'month'"
-      >Click on a month label to change the view to that month.</span
-    >
-    <span *ngSwitchCase="'week'"
-      >Click on a day header to change the view to that day.</span
-    >
-    <span *ngSwitchCase="'day'">There is no other view to navigate to.</span>
+<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
+<link href="https://unpkg.com/angular-calendar@0.27.7/css/angular-calendar.css" rel="stylesheet">
+<link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
+
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        Previous
+      </div>
+      <div
+        class="btn btn-outline-secondary"
+        mwlCalendarToday
+        [(viewDate)]="viewDate">
+        Today
+      </div>
+      <div
+        class="btn btn-primary"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"
+      >
+        Month
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"
+      >
+        Week
+      </div>
+      <div
+        class="btn btn-primary"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"
+      >
+        Day
+      </div>
+    </div>
   </div>
 </div>
-
+<br />
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
-    *ngSwitchCase="'month'"
+    *ngSwitchCase="CalendarView.Month"
     [viewDate]="viewDate"
     [events]="events"
-    (dayClicked)="viewDate = $event.day.date; view = 'day'"
+    [refresh]="refresh"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-month-view>
   <mwl-calendar-week-view
-    *ngSwitchCase="'week'"
+    *ngSwitchCase="CalendarView.Week"
     [viewDate]="viewDate"
     [events]="events"
-    (dayHeaderClicked)="viewDate = $event.day.date; view = 'day'"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-week-view>
   <mwl-calendar-day-view
-    *ngSwitchCase="'day'"
+    *ngSwitchCase="CalendarView.Day"
     [viewDate]="viewDate"
     [events]="events"
+    [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
   >
   </mwl-calendar-day-view>
 </div>
+
+
+<br /><br /><br />
+
+<h3>
+  Edit interview list
+  <button class="btn btn-primary pull-right" (click)="addEvent()">
+    Add new
+  </button>
+  <div class="clearfix"></div>
+</h3>
+
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalData?.action }}</h5>
+    <button type="button" class="close" (click)="close(); reloadData()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-edit-interview [interview]="modalData?.event.meta"></app-edit-interview>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close(); reloadData()">
+      OK
+    </button>
+  </div>
+</ng-template>

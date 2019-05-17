@@ -8,12 +8,17 @@ import { Candidate } from '../domain/candidate';
     providedIn: 'root'
 })
 export class CandidateService {
+
     private baseUrl = 'http://localhost:8443/api/v1/candidate';
 	
     constructor(private http: HttpClient) {}
     
     getCandidate(id: number): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${id}`);
+	}
+
+	getAll(): Observable<any> {
+		return this.http.get(`${this.baseUrl}/all`);
 	}
 
 	createCandidate(candidate: Candidate): Observable<any> {

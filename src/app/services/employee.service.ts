@@ -17,7 +17,7 @@ export class EmployeeService {
 	}
 
 	createEmployee(employee: Employee): Observable<any> {
-		const req = new HttpRequest('POST', `${this.baseUrl}/create`, employee);
+		const req = new HttpRequest('PUT', `${this.baseUrl}`, employee);
 		let result = this.http.request(req);
 		return result;
 	}
@@ -32,7 +32,7 @@ export class EmployeeService {
 	}
 
 	getEmployeeList(): Observable<any> {
-		return this.http.get(`${this.baseUrl}`);
+		return this.http.get(`${this.baseUrl}/all`);
 	}
 	
 	getEmployeesPage(page: number, pageSize: number, sortColumn: string, sortDirection: string): Observable<any> {

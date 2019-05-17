@@ -54,8 +54,7 @@ export class CreateCandidateComponent implements OnInit {
     this.candidate.skype = this.form.skype.value;
     this.candidate.description = this.form.description.value;
     this.candidateService.createCandidate(this.candidate)
-      .subscribe(data => this.setMessage(data), error => this.setError(error));
-    this.router.navigate(['/candidate-list']);
+      .subscribe(data => this.setMessage(data), error => this.setError(error), () => this.router.navigate(['/candidate-list']));
 	}
 	
 	setMessage(message: string): void {

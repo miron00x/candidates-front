@@ -3,6 +3,6 @@ import { Candidate } from './candidate';
 export class Interview {
     id: number;
     candidate: Candidate;
-    interviewDate: Date;
+    interviewDateTime: Date;
     status: String;
 }

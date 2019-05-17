@@ -8,6 +8,7 @@ import { Interview } from '../domain/interview';
     providedIn: 'root'
 })
 export class InterviewService {
+  
     private baseUrl = 'http://localhost:8443/api/v1/interview';
 	
     constructor(private http: HttpClient) {}
@@ -17,6 +18,18 @@ export class InterviewService {
     }
     
     getInterviewList(): Observable<any>{
-        return this.http.get(`${this.baseUrl}`);
+        return this.http.get(`${this.baseUrl}/all`);
+    }
+
+    createInterview(interview: Interview): Observable<any> {
+        return this.http.put(`${this.baseUrl}`, interview);
+    }
+
+    update(interview: Interview): Observable<any> {
+        return this.http.put(`${this.baseUrl}/update`, interview);
+    }
+
+    delete(interview: Interview): Observable<any> {
+        return this.http.put(`${this.baseUrl}/reset`, interview);
     }
 }
