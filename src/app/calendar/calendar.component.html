@@ -59,6 +59,13 @@
   </div>
 </div>
 <br />
+<h3>
+  Interview calendar
+  <button class="btn btn-primary pull-right" (click)="addEvent()">
+    Add new interview
+  </button>
+  <div class="clearfix"></div>
+</h3>
 <div [ngSwitch]="view">
   <mwl-calendar-month-view
     *ngSwitchCase="CalendarView.Month"
@@ -93,15 +100,6 @@
 
 
 <br /><br /><br />
-
-<h3>
-  Edit interview list
-  <button class="btn btn-primary pull-right" (click)="addEvent()">
-    Add new
-  </button>
-  <div class="clearfix"></div>
-</h3>
-
 
 <ng-template #modalContent let-close="close">
   <div class="modal-header">

@@ -132,15 +132,23 @@ export class CalendarComponent implements OnInit {
   }: CalendarEventTimesChangedEvent): void {
     this.events = this.events.map(iEvent => {
       if (iEvent === event) {
-        return {
+        let newEvent = {
           ...event,
           start: newStart,
           end: newEnd
         };
+        newEvent.meta.interviewDateTime = newEvent.start;
+        this.interviewService.update(newEvent.meta)
+          .subscribe(data => this.setMessage(data), 
+          error => this.setError(error), 
+          () => this.setMessage("Update Ok")
+        );
+        this.viewDate = newEvent.start;
+        return newEvent;
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    //this.handleEvent('Dropped or resized', event);
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
@@ -149,20 +157,20 @@ export class CalendarComponent implements OnInit {
   }
 
   addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true
-        }
+    let event = {
+      title: 'New event',
+      start: startOfDay(new Date()),
+      end: endOfDay(new Date()),
+      color: colors.red,
+      actions: this.actions,
+      meta: {},
+      draggable: true,
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
       }
-    ];
+    };
+    this.handleEvent("Create", event);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {

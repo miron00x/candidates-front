@@ -1,48 +1,49 @@
+<link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
+<link href="https://unpkg.com/angular-calendar@0.27.7/css/angular-calendar.css" rel="stylesheet">
+<link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
+
+
 <div class="table-responsive">
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Primary color</th>
+        <th>Candidate</th>
         <th>Starts at</th>
-        <th>Ends at</th>
-        <th>Remove</th>
+        <th>Status</th>
+        <th>Action</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let event of events">
         <td>
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="event.title"
-            (keyup)="refresh.next()"
-          />
+          <ng-select [items]="candidates"
+            bindLabel="firstName"
+            [hideSelected]="true"
+            [(ngModel)]="selectedCandidate"
+            [ngModelOptions]="{standalone: true}">
+          </ng-select>
         </td>
-        <td>
+        <!--<td>
           <input
             type="color"
             [(ngModel)]="event.color.primary"
             (change)="refresh.next()"
           />
-        </td>
+        </td>-->
         <td>
-          <input
-            class="form-control"
-            type="text"
-            mwlFlatpickr
-            [(ngModel)]="event.start"
-            (ngModelChange)="refresh.next()"
-            [altInput]="true"
-            [convertModelValue]="true"
-            [enableTime]="true"
-            dateFormat="Y-m-dTH:i"
-            altFormat="F j, Y H:i"
-            placeholder="Not set"
-          />
+          <ng-select [items]="employees | async"
+            bindLabel="firstName"
+            bindValue="id"
+            [multiple]="true"
+            [hideSelected]="true"
+            [loading]="employeesLoading"
+            [typeahead]="employeesinput$"
+            [(ngModel)]="selectedEmployees"
+            [ngModelOptions]="{standalone: true}">
+          </ng-select>
         </td>
-        <td>
+        <!--<td>
           <input
             class="form-control"
             type="text"
@@ -56,8 +57,19 @@
             altFormat="F j, Y H:i"
             placeholder="Not set"
           />
+        </td>-->
+        <td>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="event.meta.status"
+            (change)="refresh.next()"
+          />
         </td>
         <td>
+          <button class="btn btn-primary" (click)="editEvent(event)">
+            Edit
+          </button>
           <button class="btn btn-danger" (click)="deleteEvent(event)">
             Delete
           </button>

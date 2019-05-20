@@ -73,19 +73,28 @@ export class EditInterviewComponent implements OnInit {
 
 	onSubmit() {
     this.submitted = true;
-     
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
-    this.interviewService.update(this.interview)
+    if(!this.interview.id){
+      this.interviewService.createInterview(this.interview)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => {
           this.loading = false;
           this.setMessage("OK Ok kO KO");
         }
-      );
-
+      ); 
+    } else {
+      this.interviewService.update(this.interview)
+      .subscribe(data => this.setMessage(data), 
+        error => this.setError(error), 
+        () => {
+          this.loading = false;
+          this.setMessage("OK Ok kO KO");
+        }
+      ); 
+    }
   }
 	
 	setMessage(message: string): void {

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { startOfDay, endOfDay } from 'date-fns';
 import { colors } from '../calendar/colors';
 import { CalendarEvent } from 'calendar-utils';
+import { CalendarEventAction } from 'angular-calendar';
 
 @Component({
   selector: 'app-interview-list',
@@ -18,14 +19,31 @@ export class InterviewListComponent implements OnInit {
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
   interviews: Interview[];
+  events: CalendarEvent[];
 
   error: String = '';
   message: String = '';
 
   modalData: {
     action: string;
-    event: String;
+    event: CalendarEvent;
   };
+
+  actions: CalendarEventAction[] = [
+    {
+      label: '<i class="fa fa-fw fa-pencil"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.handleEvent('Edited', event);
+      }
+    },
+    {
+      label: '<i class="fa fa-fw fa-times"></i>',
+      onClick: ({ event }: { event: CalendarEvent }): void => {
+        this.events = this.events.filter(iEvent => iEvent !== event);
+        this.handleEvent('Deleted', event);
+      }
+    }
+  ];
 
   refresh: Subject<any> = new Subject();
 
@@ -45,13 +63,38 @@ export class InterviewListComponent implements OnInit {
     this.interviewService.getInterviewList().subscribe(
       data => {
         this.interviews = data;
+        this.updateEvents();
       },
       error => this.setError(error),
       () => this.setMessage("Reload OK")
     );
   }
 
-  handleEvent(action: string, event: String): void {
+  updateEvents(){
+    this.events = [];
+    for(let interview of this.interviews){
+      var date : Date = new Date(interview.interviewDateTime);
+      var date_end : Date = new Date(interview.interviewDateTime);
+      date_end.setMinutes(60);  // +1 час
+      let event: CalendarEvent = {
+        id: this.events.length,
+        title: interview.candidate.firstName + ` ` + interview.candidate.lastName,
+        start: date,
+        end: date_end,
+        color: colors.red,
+        actions: this.actions,
+        meta: interview,
+        resizable: {
+          beforeStart: true,
+          afterEnd: true
+        },
+        draggable: true
+      }
+      this.events.push(event);
+    }
+  }
+
+  handleEvent(action: string, event: CalendarEvent): void {
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }

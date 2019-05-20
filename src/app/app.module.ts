@@ -28,6 +28,8 @@ import { CreateInterviewComponent } from './create-interview/create-interview.co
 import { NgSelectModule } from '@ng-select/ng-select';
 import { EditInterviewComponent } from './edit-interview/edit-interview.component';
 import { InterviewListComponent } from './interview-list/interview-list.component';
+import { StatisticComponent } from './statistic/statistic.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { InterviewListComponent } from './interview-list/interview-list.componen
     CreateCandidateComponent,
     CreateInterviewComponent,
     EditInterviewComponent,
-    InterviewListComponent
+    InterviewListComponent,
+    StatisticComponent
   ],
   imports: [
 	  CommonModule,
@@ -57,7 +60,8 @@ import { InterviewListComponent } from './interview-list/interview-list.componen
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
-    NgSelectModule
+    NgSelectModule,
+    ChartsModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue : '/' },
