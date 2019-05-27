@@ -9,9 +9,11 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CreateInterviewComponent } from './create-interview/create-interview.component';
 import { InterviewListComponent } from './interview-list/interview-list.component';
 import { StatisticComponent } from './statistic/statistic.component';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { CandidateDetailsComponent } from './candidate-details/candidate-details.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'create-employee', pathMatch: 'full' },
+  { path: '', redirectTo: 'calendar', pathMatch: 'full' },
   { path: 'calendar', component: CalendarComponent, canActivate: [AuthGuard] },
   { path: 'create-employee', component: CreateEmployeeComponent, canActivate: [AuthGuard] },
   { path: 'employee-list', component: EmployeeListComponent, canActivate: [AuthGuard] },
@@ -19,7 +21,9 @@ const routes: Routes = [
   { path: 'interview-list', component: InterviewListComponent, canActivate: [AuthGuard] },
   { path: 'create-candidate', component: CreateCandidateComponent, canActivate: [AuthGuard] },
   { path: 'create-interview', component: CreateInterviewComponent, canActivate: [AuthGuard] },
-  { path: 'statistic', component: StatisticComponent, canActivate: [AuthGuard] }
+  { path: 'statistic', component: StatisticComponent, canActivate: [AuthGuard] },
+  { path: 'employee-details/:id', component: EmployeeDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'candidate-details/:id', component: CandidateDetailsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

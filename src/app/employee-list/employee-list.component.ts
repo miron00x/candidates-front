@@ -1,9 +1,12 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from '../domain/employee';
 import { NgbdSortableHeader, SortEvent } from '../util/sortable.directive';
 import { Router } from '@angular/router';
 import { EmployeeService } from '../services/employee.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DepartmentService } from '../services/department.service';
+import { Department } from '../domain/department';
 
 @Component({
   selector: 'app-employee-list',
@@ -12,17 +15,27 @@ import { EmployeeService } from '../services/employee.service';
 })
 export class EmployeeListComponent implements OnInit {
 
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  modalData: {
+    action: string;
+    employee: Employee;
+  };
+
   employees: Observable<Employee[]>;
+  departments: Department[];
   total: number = 1;
   pageNumber: number = 1;
-  pageSize: number = 4;
+  pageSize: number = 7;
   sortColumn: string = 'id';
   sortDirection: string = 'NULL';
   error: String;
   
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
  
-  constructor(private employeeService: EmployeeService, private router: Router) {
+  constructor(private employeeService: EmployeeService, 
+    private departmentService: DepartmentService,
+    private router: Router, 
+    private modal: NgbModal) {
     this.reloadData();
   }
   
@@ -47,7 +60,17 @@ export class EmployeeListComponent implements OnInit {
   }
  
   ngOnInit() {
+    this.fillDepartments();
     this.reloadData();
+  }
+
+  handleEvent(action: string, employee: Employee): void {
+    this.modalData = { employee, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  addEmployee(){
+    this.handleEvent("Create", null);
   }
  
   deleteEmployees() {
@@ -58,6 +81,24 @@ export class EmployeeListComponent implements OnInit {
           this.reloadData();
         },
         error => this.setError(error));
+  }
+
+  fillDepartments(){
+    this.departmentService.getAll().subscribe(
+      data => {
+        this.departments = data;
+      }
+    );
+  }
+
+  getDepartmentName(id: string){
+    let depName : string;
+    if(this.departments){
+      this.departments.map((department : Department) => {
+        if(department.id.toString() === id) depName = department.departmentName;
+      });
+    }
+    return depName;
   }
  
   reloadData() {
@@ -81,7 +122,7 @@ export class EmployeeListComponent implements OnInit {
 	}	
   
   employeeDetails(employee: Employee){
-	  this.router.navigate(["employee/details/", employee.id]);
+	  this.router.navigate(["employee-details/", employee.id]);
   }
 
 }

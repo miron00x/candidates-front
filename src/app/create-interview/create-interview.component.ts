@@ -30,7 +30,7 @@ export class CreateInterviewComponent implements OnInit {
   employeeLoading = false;
   employeesinput$ = new Subject<string>();
 
-  selectedEmployees: Employee[] = <any>[];
+  selectedEmployees: number[];
   selectedCandidate: Candidate;
 
   candidates: Candidate[];
@@ -76,7 +76,7 @@ export class CreateInterviewComponent implements OnInit {
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
-    this.interviewService.createInterview(this.interview)
+    this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => this.router.navigate(['/calendar'])

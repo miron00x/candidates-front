@@ -1,21 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Candidate } from '../domain/candidate';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { EmployeeService } from '../services/employee.service';
-import { DepartmentService } from '../services/department.service';
-import { CandidateService } from '../services/candidate.service';
+import { Candidate } from '../domain/candidate';
 import { FileUploader } from 'ng2-file-upload';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CandidateService } from '../services/candidate.service';
 
 @Component({
-  selector: 'app-create-candidate',
-  templateUrl: './create-candidate.component.html',
-  styleUrls: ['./create-candidate.component.css']
+  selector: 'app-edit-candidate',
+  templateUrl: './edit-candidate.component.html',
+  styleUrls: ['./edit-candidate.component.css']
 })
-export class CreateCandidateComponent implements OnInit {
+export class EditCandidateComponent implements OnInit {
 
   createForm: FormGroup;
-  candidate: Candidate  = new Candidate();
+  @Input() candidate: Candidate;
 	message = '';
   error = '';
   loading = false;
@@ -34,12 +32,12 @@ export class CreateCandidateComponent implements OnInit {
 
 	ngOnInit() {
     this.createForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      telephone: ['', Validators.required],
-      skype: ['', Validators.required],
-      mail: ['', Validators.email],
-      description: ['', Validators.required]
+      firstName: [this.candidate.firstName, Validators.required],
+      lastName: [this.candidate.lastName, Validators.required],
+      telephone: [this.candidate.telephone, Validators.required],
+      skype: [this.candidate.skype, Validators.required],
+      mail: [this.candidate.mail, Validators.email],
+      description: [this.candidate.description, Validators.required]
     });
   }
 
@@ -71,10 +69,8 @@ export class CreateCandidateComponent implements OnInit {
     this.candidate.mail = this.form.mail.value;
     this.candidate.skype = this.form.skype.value;
     this.candidate.description = this.form.description.value;
-    this.candidateService.createCandidate(this.candidate, files)
+    this.candidateService.updateCandidate(this.candidate)
       .subscribe(data => this.setMessage(data), error => this.setError(error), () => {this.loading = false});
-    this.uploader.clearQueue();
-    this.createForm.reset();
 	}
 	
 	setMessage(message: string): void {

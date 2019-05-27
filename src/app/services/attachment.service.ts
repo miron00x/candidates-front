@@ -7,13 +7,13 @@ import { Employee } from '../domain/employee';
 @Injectable({
     providedIn: 'root'
 })
-export class DepartmentService {
-    private baseUrl = 'http://localhost:8443/api/v1/department';
+export class AttachmentService {
+    private baseUrl = 'http://localhost:8443/api/v1/attachment';
 	
     constructor(private http: HttpClient) {}
     
-    getDepartment(id: string): Observable<any> {
-		  return this.http.get(`${this.baseUrl}/${id}`);
+    downloadAttachmentById(id: string): Observable<any> {
+		return this.http.get(`${this.baseUrl}/download/${id}`, { responseType: 'blob' });
     }
 
     getAll(): Observable<any> {

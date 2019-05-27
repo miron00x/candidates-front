@@ -1,4 +1,10 @@
-<h3 class="text-primary text-center">Candidates</h3>
+<h3>
+  Candidates
+  <button class="btn btn-primary pull-right" (click)="addCandidate()">
+    Add new candidate
+  </button>
+  <div class="clearfix"></div>
+</h3>
 <table class="table table-striped table-hover">
 	<thead>
 		<tr>
@@ -24,12 +30,27 @@
 
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
-<div class="d-flex justify-content-between p-2">
+<div class="d-flex justify-content-center p-2">
 	<ngb-pagination
 	(pageChange)="onPageChange($event)" [collectionSize]="total" [(page)]="pageNumber" [pageSize]="pageSize">
 	</ngb-pagination>
 </div>
 
-<div>
-  <button type="button" class="button btn-danger" (click)='deleteCandidates()'>Delete All</button>
-</div>
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalData?.action }}</h5>
+    <button type="button" class="close" (click)="close(); reloadData()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+		<div *ngIf="!modalData?.candidate"><app-create-candidate></app-create-candidate></div>
+		<!--<div *ngIf="modalData?.candidate"><app-edit-candidate></app-edit-candidate></div>-->
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close(); reloadData()">
+      OK
+    </button>
+  </div>
+</ng-template>

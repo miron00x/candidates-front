@@ -30,6 +30,11 @@ import { EditInterviewComponent } from './edit-interview/edit-interview.componen
 import { InterviewListComponent } from './interview-list/interview-list.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { ChartsModule } from 'ng2-charts';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+
+import {FileUploadModule} from "ng2-file-upload";
+import { CandidateDetailsComponent } from './candidate-details/candidate-details.component';
+import { EditCandidateComponent } from './edit-candidate/edit-candidate.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,10 @@ import { ChartsModule } from 'ng2-charts';
     CreateInterviewComponent,
     EditInterviewComponent,
     InterviewListComponent,
-    StatisticComponent
+    StatisticComponent,
+    EmployeeDetailsComponent,
+    CandidateDetailsComponent,
+    EditCandidateComponent
   ],
   imports: [
 	  CommonModule,
@@ -61,7 +69,8 @@ import { ChartsModule } from 'ng2-charts';
       useFactory: adapterFactory
     }),
     NgSelectModule,
-    ChartsModule
+    ChartsModule,
+    FileUploadModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue : '/' },

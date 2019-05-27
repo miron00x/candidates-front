@@ -1,7 +1,6 @@
 <link href="https://unpkg.com/font-awesome@4.7.0/css/font-awesome.css" rel="stylesheet">
 <link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
 
-<h3 class="text-primary text-center">Edit Interview</h3>
 <div class="container">
   <form (ngSubmit)="onSubmit()">
       <div class="form-group">
@@ -15,13 +14,11 @@
       </div>
     <div class="form-group">
       <label>Employees: </label>
-      <ng-select [items]="employees | async"
+      <ng-select [items]="employees"
           bindLabel="firstName"
           bindValue="id"
           [multiple]="true"
           [hideSelected]="true"
-          [loading]="employeesLoading"
-          [typeahead]="employeesinput$"
           [(ngModel)]="selectedEmployees"
           [ngModelOptions]="{standalone: true}">
         </ng-select>

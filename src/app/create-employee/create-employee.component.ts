@@ -63,7 +63,7 @@ export class CreateEmployeeComponent implements OnInit {
     this.employee.lastName = this.form.lastName.value;
     this.employee.department = this.selectedDepartment;
     this.employeeService.createEmployee(this.employee)
-      .subscribe(data => this.setMessage(data), error => this.setError(error), () => this.router.navigate(['/employee-list']));
+      .subscribe(data => this.setMessage(data), error => this.setError(error), () => this.loading = false);
 	}
 	
 	setMessage(message: string): void {

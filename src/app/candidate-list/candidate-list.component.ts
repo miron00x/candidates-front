@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList, ViewChild, TemplateRef } from '@angular/core';
 import { Candidate } from '../domain/candidate';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from '../util/sortable.directive';
 import { CandidateService } from '../services/candidate.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-candidate-list',
@@ -12,24 +13,36 @@ import { Router } from '@angular/router';
 })
 export class CandidateListComponent implements OnInit {
 
-  
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
+  modalData: {
+    action: string;
+    candidate: Candidate;
+  };
+
   candidates: Observable<Candidate[]>;
   total: number = 1;
   pageNumber: number = 1;
-  pageSize: number = 4;
+  pageSize: number = 7;
   sortColumn: string = 'id';
   sortDirection: string = 'NULL';
   error: String;
   
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
  
-  constructor(private candidateService: CandidateService, private router: Router) {
+  constructor(private candidateService: CandidateService,
+     private router: Router,
+      private modal: NgbModal) {
     this.reloadData();
   }
   
   onPageChange(pageNumber){
     this.pageNumber = pageNumber;
     this.reloadData();
+  }
+
+  handleEvent(action: string, candidate: Candidate): void {
+    this.modalData = { candidate, action };
+    this.modal.open(this.modalContent, { size: 'lg' });
   }
   
   onSort({column, direction}: SortEvent) {
@@ -58,6 +71,10 @@ export class CandidateListComponent implements OnInit {
         },
         error => this.setError(error));
   }
+
+  addCandidate(){
+    this.handleEvent("Create", null);
+  }
  
   reloadData() {
     this.candidateService.getTotal().subscribe(
@@ -79,8 +96,8 @@ export class CandidateListComponent implements OnInit {
 		this.error = `Error: ${error}`;
 	}	
   
-  employeeDetails(candidate: Candidate){
-	  this.router.navigate(["candidate/details/", candidate.id]);
+  candidateDetails(candidate: Candidate){
+	  this.router.navigate(["candidate-details/", candidate.id]);
   }
 
 }

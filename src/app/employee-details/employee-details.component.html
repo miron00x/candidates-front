@@ -1,0 +1,32 @@
+
+<h3>
+  Employee details
+  <button class="btn btn-primary pull-right" (click)="editEmployee()">
+    Edit employee
+  </button>
+  <div class="clearfix"></div>
+</h3>
+<div *ngIf="employee" class="container">
+	<form [formGroup]="EditForm">
+		<div class="form-group">
+			<label>Employee first name: </label>
+			<input class="form-control" type="text" formControlName="firstName" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }">
+			<label>Employee last name: </label>
+			<input class="form-control" type="text" formControlName="lastName" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }">
+			<label>Description: </label>
+			<textarea class="form-control" formControlName="description" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }"></textarea>
+			<label>User name: </label>
+			<input class="form-control" type="text" formControlName="user" disabled>
+			<label>Upload date: </label>
+			<input class="form-control" type="datetime-local" formControlName="date" disabled>
+			<button *ngIf="change == true" class="btn btn-default" [disabled]="isValid" (click)="saveChange()">
+				Save
+			</button>
+		</div>
+	</form>
+	<button type="button" class="btn btn-info" (click)="downloadDocument()">Download</button>
+	<button type="button" class="btn btn-primary" (click)="updateDocument()">Update File</button>
+	<button type="button" class="btn btn-danger" (click)="deleteDocument()">Delete</button>
+</div>
+
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>

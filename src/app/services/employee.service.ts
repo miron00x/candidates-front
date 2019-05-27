@@ -17,7 +17,7 @@ export class EmployeeService {
 	}
 
 	createEmployee(employee: Employee): Observable<any> {
-		const req = new HttpRequest('PUT', `${this.baseUrl}`, employee);
+		const req = new HttpRequest('PUT', `${this.baseUrl}?firstName=${employee.firstName}&lastName=${employee.lastName}&departmentId=${employee.department.id}`, employee);
 		let result = this.http.request(req);
 		return result;
 	}

@@ -21,15 +21,36 @@ export class InterviewService {
         return this.http.get(`${this.baseUrl}/all`);
     }
 
-    createInterview(interview: Interview): Observable<any> {
-        return this.http.put(`${this.baseUrl}`, interview);
+    createInterview(interview: Interview, employeesId: number[]): Observable<any> {
+        let request = {
+            "candidateId" : interview.candidate.id,
+            "interviewDateTime" : interview.interviewDateTime,
+            "status" : interview.status,
+            "employeesId" : employeesId
+        };
+        console.log(interview.interviewDateTime);
+        return this.http.put(`${this.baseUrl}?candidateId=${interview.candidate.id}&interviewDateTime=`
+            + request.interviewDateTime.toISOString().substr(0, request.interviewDateTime.toISOString().length-5) + `&status=${interview.status}&employeesId=${employeesId}`
+            , request 
+        );
     }
 
-    update(interview: Interview): Observable<any> {
-        return this.http.put(`${this.baseUrl}/update`, interview);
+    update(interview: Interview, employeesId: number[]): Observable<any> {
+        let request = {
+            "id" : interview.id,
+            "candidateId" : interview.candidate.id,
+            "interviewDateTime" : interview.interviewDateTime,
+            "status" : interview.status,
+            "employeesId" : employeesId
+        };
+        console.log(request.interviewDateTime.toISOString());
+        return this.http.put(`${this.baseUrl}?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
+         + request.interviewDateTime.toISOString().substr(0, request.interviewDateTime.toISOString().length-5) + `&status=${interview.status}&employeesId=${employeesId}`
+            , request 
+        );
     }
 
     delete(interview: Interview): Observable<any> {
-        return this.http.put(`${this.baseUrl}/reset`, interview);
+        return this.http.put(`${this.baseUrl}/reset?id=${interview.id}`, interview);
     }
 }

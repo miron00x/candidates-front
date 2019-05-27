@@ -22,13 +22,10 @@ export class EditInterviewComponent implements OnInit {
   error = '';
   loading = false;
   submitted = false;
-  selectedEmployee: Employee;
 
   employees: Observable<Employee[]>;
-  employeeLoading = false;
-  employeesinput$ = new Subject<string>();
 
-  selectedEmployees: Employee[] = <any>[];
+  selectedEmployees: number[];
   selectedCandidate: Candidate;
 
   candidates: Candidate[];
@@ -44,28 +41,22 @@ export class EditInterviewComponent implements OnInit {
   ) { }
 
 	ngOnInit() {
-    //this.selectedEmployees = this.interview.employees;
+    if(this.interview.employees){
+      this.selectedEmployees = this.interview.employees.map((employee) => {
+        return employee.id;
+      });
+    }
     this.selectedCandidate = this.interview.candidate;
     this.date = this.interview.interviewDateTime;
     this.fillCandidates();
-    this.loadEmployees();
-  }
-
-  private loadEmployees() {
-    this.employees = concat(
-        of([]), // default items
-        this.employeesinput$.pipe(
-           debounceTime(200),
-           distinctUntilChanged(),
-           tap(() => this.employeeLoading = true),
-           switchMap(term => this.employeeService.getEmployeeList().pipe(
-               catchError(() => of([])), // empty list on error
-               tap(() => this.employeeLoading = false)
-           )) 
-        )
-    );
+    this.fillEmployees();
   }
   
+  fillEmployees(){
+    this.employeeService.getEmployeeList()
+      .subscribe(data => this.employees=data, error => this.setError(error));
+  }
+
   fillCandidates(){
     this.candidateService.getAll()
       .subscribe(data => this.candidates=data, error => this.setError(error));
@@ -76,8 +67,9 @@ export class EditInterviewComponent implements OnInit {
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
+    console.log(this.date);
     if(!this.interview.id){
-      this.interviewService.createInterview(this.interview)
+      this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => {
@@ -86,7 +78,7 @@ export class EditInterviewComponent implements OnInit {
         }
       ); 
     } else {
-      this.interviewService.update(this.interview)
+      this.interviewService.update(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => {

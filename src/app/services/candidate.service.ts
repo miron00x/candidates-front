@@ -11,7 +11,7 @@ export class CandidateService {
 
     private baseUrl = 'http://localhost:8443/api/v1/candidate';
 	
-    constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
     
     getCandidate(id: number): Observable<any> {
 		return this.http.get(`${this.baseUrl}/${id}`);
@@ -21,14 +21,19 @@ export class CandidateService {
 		return this.http.get(`${this.baseUrl}/all`);
 	}
 
-	createCandidate(candidate: Candidate): Observable<any> {
-		const req = new HttpRequest('PUT', `${this.baseUrl}`, candidate);
+	createCandidate(candidate: Candidate, files: File[]): Observable<any> {
+		let formData = new FormData();
+		for (var i = 0; i < files.length; i++) {
+			formData.append("uploadFile", files[i]);
+		}
+		formData.append('candidate', JSON.stringify(candidate));
+		const req = new HttpRequest('PUT', `${this.baseUrl}`, formData);
 		let result = this.http.request(req);
 		return result;
 	}
 
 	updateCandidate(candidate: Candidate): Observable<any> {
-		return this.http.post(`${this.baseUrl}/upd`, candidate);
+		return this.http.put(`${this.baseUrl}/update`, candidate);
 	}
 
 	deleteCandidate(id: number): Observable<any> {

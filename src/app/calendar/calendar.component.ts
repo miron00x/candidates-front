@@ -17,6 +17,7 @@ import {
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import 'flatpickr/dist/flatpickr.css';
+import { Employee } from '../domain/employee';
 
 @Component({
   selector: 'app-calendar',
@@ -47,14 +48,18 @@ export class CalendarComponent implements OnInit {
     {
       label: '<i class="fa fa-fw fa-pencil"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
+        this.handleEvent('Edit interview', event);
       }
     },
     {
       label: '<i class="fa fa-fw fa-times"></i>',
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.interviewService.delete(event.meta).subscribe(
+          data => this.setMessage(data),
+          error => this.setError(error)
+        );
+        //this.handleEvent('Deleted', event);
       }
     }
   ];
@@ -81,6 +86,7 @@ export class CalendarComponent implements OnInit {
     this.interviewService.getInterviewList().subscribe(
       data => {
         this.interviews = data;
+        this.updateEvents();
       },
       error => this.setError(error),
       () => this.updateEvents()
@@ -95,7 +101,9 @@ export class CalendarComponent implements OnInit {
       date_end.setMinutes(60);  // +1 час
       let event: CalendarEvent = {
         id: this.events.length,
-        title: interview.candidate.firstName + ` ` + interview.candidate.lastName,
+        title: interview.candidate.firstName + ` ` 
+          + interview.candidate.lastName + ': ' 
+          + interview.employees.map((e : Employee) => { return e.firstName + e.lastName + '; ' }),
         start: date,
         end: date_end,
         color: colors.red,
@@ -138,7 +146,11 @@ export class CalendarComponent implements OnInit {
           end: newEnd
         };
         newEvent.meta.interviewDateTime = newEvent.start;
-        this.interviewService.update(newEvent.meta)
+        let employeesId = [];
+        newEvent.meta.employees.map((employee) => {
+          employeesId.push(employee.id);
+        });
+        this.interviewService.update(newEvent.meta, employeesId)
           .subscribe(data => this.setMessage(data), 
           error => this.setError(error), 
           () => this.setMessage("Update Ok")
@@ -152,6 +164,7 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
+    if(action === "Clicked") action = "Edit interview";
     this.modalData = { event, action };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -170,7 +183,7 @@ export class CalendarComponent implements OnInit {
         afterEnd: true
       }
     };
-    this.handleEvent("Create", event);
+    this.handleEvent("Create interview", event);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
