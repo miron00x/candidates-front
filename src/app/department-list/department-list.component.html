@@ -1,8 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h3>
-	Employees
+	Departments
 	<button class="btn btn-primary pull-right" (click)="addEmployee()">
-		Add new employee
+		Add new department
 	</button>
 	<div class="clearfix"></div>
 </h3>
@@ -10,17 +10,13 @@
 	<thead>
 		<tr>
 		<th scope="col">#</th>
-		<th scope="col" sortable="firstName" (sort)="onSort($event)"><i id="firstName"></i>First Name<i class="fa fa-fw fa-sort"></i></th>
-		<th scope="col" sortable="lastName" (sort)="onSort($event)"><i id="lastName"></i>Last name<i class="fa fa-fw fa-sort"></i></th>
-		<th scope="col" sortable="department" (sort)="onSort($event)"><i id="department"></i>Department<i class="fa fa-fw fa-sort"></i></th>
+		<th scope="col" sortable="departmentName" (sort)="onSort($event)"><i id="departmentName"></i>Department Name<i class="fa fa-fw fa-sort"></i></th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let employee of employees" (click)="employeeDetails(employee)">
-			<th scope="row">{{ employee.id }}</th>
-			<td><ngb-highlight [result]="employee.firstName"></ngb-highlight></td>
-			<td><ngb-highlight [result]="employee.lastName"></ngb-highlight></td>
-			<td><ngb-highlight [result]="employee.department.departmentName"></ngb-highlight></td>
+		<tr *ngFor="let department of departments" (click)="departmentDetails(department)">
+			<th scope="row">{{ department.id }}</th>
+			<td><ngb-highlight [result]="department.departmentName"></ngb-highlight></td>
 		</tr>
 	</tbody>
 </table>
@@ -41,7 +37,7 @@
 	</button>
 </div>
 <div class="modal-body">
-		<div *ngIf="!modalData?.employee"><app-create-employee></app-create-employee></div>
+		<div *ngIf="!modalData?.department"><app-create-department></app-create-department></div>
 		<!--<div *ngIf="modalData?.candidate"><app-edit-candidate></app-edit-candidate></div>-->
 </div>
 <div class="modal-footer">

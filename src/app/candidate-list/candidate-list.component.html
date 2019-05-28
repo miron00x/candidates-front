@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h3>
   Candidates
   <button class="btn btn-primary pull-right" (click)="addCandidate()">
@@ -9,11 +10,16 @@
 	<thead>
 		<tr>
 		<th scope="col">#</th>
-		<th scope="col" sortable="firstName" (sort)="onSort($event)">First Name</th>
-		<th scope="col" sortable="lastName" (sort)="onSort($event)">Last name</th>
-		<th scope="col" sortable="phone" (sort)="onSort($event)">Phone</th>
-		<th scope="col" sortable="mail" (sort)="onSort($event)">Mail</th>
-		<th scope="col" sortable="skype" (sort)="onSort($event)">Skype</th>
+		<th scope="col" sortable="firstName" (sort)="onSort($event)" >
+			<i id="firstName"></i>First Name</th>
+		<th scope="col" sortable="lastName" (sort)="onSort($event)">
+			<i id="lastName"></i>Last name</th>
+		<th scope="col" sortable="telephone" (sort)="onSort($event)">
+			<i id="telephone"></i>Phone</th>
+		<th scope="col" sortable="mail" (sort)="onSort($event)">
+			<i id="mail"></i>Mail</th>
+		<th scope="col" sortable="skype" (sort)="onSort($event)">
+			<i id="skype"></i>Skype</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,14 +34,14 @@
 	</tbody>
 </table>
 
-<div *ngIf="error" class="alert alert-danger">{{error}}</div>
-
 <div class="d-flex justify-content-center p-2">
 	<ngb-pagination
 	(pageChange)="onPageChange($event)" [collectionSize]="total" [(page)]="pageNumber" [pageSize]="pageSize">
 	</ngb-pagination>
 </div>
 
+
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
 <ng-template #modalContent let-close="close">
   <div class="modal-header">

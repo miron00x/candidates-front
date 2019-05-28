@@ -67,23 +67,25 @@ export class EditInterviewComponent implements OnInit {
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
-    console.log(this.date);
+    console.log(this.interview.id);
     if(!this.interview.id){
+      console.log("CREATE");
       this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => {
           this.loading = false;
-          this.setMessage("OK Ok kO KO");
+          this.setMessage("OK");
         }
       ); 
     } else {
+      console.log("UPDATE");
       this.interviewService.update(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
         () => {
           this.loading = false;
-          this.setMessage("OK Ok kO KO");
+          this.setMessage("OK");
         }
       ); 
     }

@@ -47,15 +47,25 @@ export class CandidateListComponent implements OnInit {
   
   onSort({column, direction}: SortEvent) {
     // resetting other headers
+    
     this.headers.forEach(header => {
       if (header.sortable !== column) {
         header.direction = 'NULL';
       }
     });
-
+    switch(direction.valueOf()){
+        case "ASC" : document.getElementById(column.valueOf()).className="fa fa-hand-o-down";
+          document.getElementById(column.valueOf()).style.display="inline"; 
+          break;
+        case "DESC": document.getElementById(column.valueOf()).className="fa fa-hand-o-up"; 
+          document.getElementById(column.valueOf()).style.display="inline"; 
+          break;
+        case "NULL": document.getElementById(column.valueOf()).style.display="none"; break;
+    }
+    //document.getElementById(column.valueOf()).className="fa fa-hand-o-down";
     this.sortColumn = column;
     this.sortDirection = direction;
-	  this.reloadData();
+    this.reloadData();
   }
  
   ngOnInit() {

@@ -43,7 +43,7 @@ export class InterviewService {
             "status" : interview.status,
             "employeesId" : employeesId
         };
-        console.log(request.interviewDateTime.toISOString());
+        console.log(interview);
         return this.http.put(`${this.baseUrl}?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
          + request.interviewDateTime.toISOString().substr(0, request.interviewDateTime.toISOString().length-5) + `&status=${interview.status}&employeesId=${employeesId}`
             , request 

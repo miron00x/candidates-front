@@ -35,6 +35,9 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import {FileUploadModule} from "ng2-file-upload";
 import { CandidateDetailsComponent } from './candidate-details/candidate-details.component';
 import { EditCandidateComponent } from './edit-candidate/edit-candidate.component';
+import { NgbdSortableHeader } from './util/sortable.directive';
+import { DepartmentListComponent } from './department-list/department-list.component';
+import { CreateDepartmentComponent } from './create-department/create-department.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { EditCandidateComponent } from './edit-candidate/edit-candidate.componen
     StatisticComponent,
     EmployeeDetailsComponent,
     CandidateDetailsComponent,
-    EditCandidateComponent
+    EditCandidateComponent,
+    NgbdSortableHeader,
+    DepartmentListComponent,
+    CreateDepartmentComponent
   ],
   imports: [
 	  CommonModule,
