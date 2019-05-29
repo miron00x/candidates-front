@@ -72,14 +72,16 @@ export class CreateInterviewComponent implements OnInit {
 
 	onSubmit() {
     this.submitted = true;
-     
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
     this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 
-        () => this.router.navigate(['/calendar'])
+        () => {
+           this.setMessage("OK");
+           this.loading = false;
+        }
       );
     
 

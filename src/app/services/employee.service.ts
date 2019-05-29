@@ -13,7 +13,7 @@ export class EmployeeService {
     constructor(private http: HttpClient) {}
     
     getEmployee(id: number): Observable<any> {
-		return this.http.get(`${this.baseUrl}/id/${id}`);
+		return this.http.get(`${this.baseUrl}/${id}`);
 	}
 
 	createEmployee(employee: Employee): Observable<any> {
@@ -23,11 +23,11 @@ export class EmployeeService {
 	}
 
 	updateEmployee(employee: Employee): Observable<any> {
-		return this.http.post(`${this.baseUrl}/upd`, employee);
+		return this.http.put(`${this.baseUrl}?id=${employee.id}&firstName=${employee.firstName}&lastName=${employee.lastName}&departmentId=${employee.department.id}`, employee);
 	}
 
 	deleteEmployee(id: number): Observable<any> {
-		let result = this.http.delete(`${this.baseUrl}/delete/${id}`, { responseType: 'text' });
+		let result = this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
 		return result;
 	}
 

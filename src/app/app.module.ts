@@ -39,6 +39,9 @@ import { NgbdSortableHeader } from './util/sortable.directive';
 import { DepartmentListComponent } from './department-list/department-list.component';
 import { CreateDepartmentComponent } from './create-department/create-department.component';
 
+import {NgxPaginationModule} from 'ngx-pagination';
+import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +60,8 @@ import { CreateDepartmentComponent } from './create-department/create-department
     EditCandidateComponent,
     NgbdSortableHeader,
     DepartmentListComponent,
-    CreateDepartmentComponent
+    CreateDepartmentComponent,
+    EditEmployeeComponent
   ],
   imports: [
 	  CommonModule,
@@ -76,7 +80,8 @@ import { CreateDepartmentComponent } from './create-department/create-department
     }),
     NgSelectModule,
     ChartsModule,
-    FileUploadModule
+    FileUploadModule,
+    NgxPaginationModule
   ],
   providers: [
     { provide: APP_BASE_HREF, useValue : '/' },

@@ -7,8 +7,8 @@
 }
 body {
     background: #2980B9;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FFFFFF, #6DD5FA, #6DD5FA, #6DD5FA, #FFFFFF);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FFFFFF, #6DD5FA, #6DD5FA, #6DD5FA, #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
+    background: -webkit-linear-gradient(to right, #FFFFFF, rgb(170, 232, 255), rgb(170, 232, 255), rgb(170, 232, 255), #FFFFFF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FFFFFF,  rgb(170, 232, 255), rgb(170, 232, 255), rgb(170, 232, 255), #FFFFFF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */  
   color: #333;
 }
 

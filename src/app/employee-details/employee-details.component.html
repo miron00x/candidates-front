@@ -1,32 +1,79 @@
-
-<h3>
-  Employee details
+<h3 class="text-primary text-center">
+  Employee Details
   <button class="btn btn-primary pull-right" (click)="editEmployee()">
     Edit employee
   </button>
   <div class="clearfix"></div>
 </h3>
 <div *ngIf="employee" class="container">
-	<form [formGroup]="EditForm">
-		<div class="form-group">
-			<label>Employee first name: </label>
-			<input class="form-control" type="text" formControlName="firstName" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }">
-			<label>Employee last name: </label>
-			<input class="form-control" type="text" formControlName="lastName" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }">
-			<label>Description: </label>
-			<textarea class="form-control" formControlName="description" (ngModelChange)="onChange($event)" [ngClass]="{ 'is-invalid': f.name.errors }"></textarea>
-			<label>User name: </label>
-			<input class="form-control" type="text" formControlName="user" disabled>
-			<label>Upload date: </label>
-			<input class="form-control" type="datetime-local" formControlName="date" disabled>
-			<button *ngIf="change == true" class="btn btn-default" [disabled]="isValid" (click)="saveChange()">
-				Save
-			</button>
-		</div>
-	</form>
-	<button type="button" class="btn btn-info" (click)="downloadDocument()">Download</button>
-	<button type="button" class="btn btn-primary" (click)="updateDocument()">Update File</button>
-	<button type="button" class="btn btn-danger" (click)="deleteDocument()">Delete</button>
+  <div class="container">
+    
+      <h3>Employee Information</h3>
+      <table class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{employee.firstName}} {{employee.lastName}} </td>
+            <td>{{employee.department.departmentName}} </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div class="container">
+      <table class="table table-striped" style="word-break: break-all;">
+        <thead class="thead-light">
+          <tr>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+						<!--
+            <td><div class="container">{{employee.description}}</div></td>
+					-->
+					</tr>
+        </tbody>
+      </table>
+  </div>
+    <div class="container">
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>Attachments</th>
+        </tr>
+        </thead>
+        <tbody>
+					<!--
+        <tr *ngFor="let attach of employee.attachments">
+          <td (click)="downloadAttachment(attach.id)">{{attach.fileName}}</td>
+				</tr>
+				-->
+        </tbody>
+      </table>
+    </div>
 </div>
 
+<div *ngIf="message" class="alert alert-success">{{message}}</div>
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+
+<ng-template #modalContent let-close="close">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ modalData?.action }}</h5>
+      <button type="button" class="close" (click)="close(); reloadData()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="modalData?.employee"><app-edit-employee [employee]="modalData?.employee"></app-edit-employee></div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-secondary" (click)="close(); reloadData()">
+        OK
+      </button>
+    </div>
+  </ng-template>

@@ -75,7 +75,7 @@ export class EditInterviewComponent implements OnInit {
         error => this.setError(error), 
         () => {
           this.loading = false;
-          this.setMessage("OK");
+          this.submitted = false;
         }
       ); 
     } else {
@@ -85,7 +85,7 @@ export class EditInterviewComponent implements OnInit {
         error => this.setError(error), 
         () => {
           this.loading = false;
-          this.setMessage("OK");
+          this.submitted = false;
         }
       ); 
     }

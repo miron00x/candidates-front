@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SortDirection } from '../util/sortable.directive';
 import { HttpClient, HttpParams, HttpRequest, HttpEvent, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { Interview } from '../domain/interview';
 
 @Injectable({
@@ -22,31 +22,20 @@ export class InterviewService {
     }
 
     createInterview(interview: Interview, employeesId: number[]): Observable<any> {
-        let request = {
-            "candidateId" : interview.candidate.id,
-            "interviewDateTime" : interview.interviewDateTime,
-            "status" : interview.status,
-            "employeesId" : employeesId
-        };
-        console.log(interview.interviewDateTime);
+        let date: String = '';
+        if(interview.interviewDateTime) date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5) ;
         return this.http.put(`${this.baseUrl}?candidateId=${interview.candidate.id}&interviewDateTime=`
-            + request.interviewDateTime.toISOString().substr(0, request.interviewDateTime.toISOString().length-5) + `&status=${interview.status}&employeesId=${employeesId}`
-            , request 
+            + date + `&status=${interview.status}&employeesId=${employeesId}`
+            , interview 
         );
     }
 
     update(interview: Interview, employeesId: number[]): Observable<any> {
-        let request = {
-            "id" : interview.id,
-            "candidateId" : interview.candidate.id,
-            "interviewDateTime" : interview.interviewDateTime,
-            "status" : interview.status,
-            "employeesId" : employeesId
-        };
-        console.log(interview);
+        let date: String = '';
+        if(interview.interviewDateTime) date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5) ;
         return this.http.put(`${this.baseUrl}?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
-         + request.interviewDateTime.toISOString().substr(0, request.interviewDateTime.toISOString().length-5) + `&status=${interview.status}&employeesId=${employeesId}`
-            , request 
+         + date + `&status=${interview.status}&employeesId=${employeesId}`
+            , interview 
         );
     }
 

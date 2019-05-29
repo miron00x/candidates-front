@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <h3>
 	Departments
-	<button class="btn btn-primary pull-right" (click)="addEmployee()">
+	<button class="btn btn-primary pull-right" (click)="addDepartment()">
 		Add new department
 	</button>
 	<div class="clearfix"></div>
@@ -10,21 +10,21 @@
 	<thead>
 		<tr>
 		<th scope="col">#</th>
-		<th scope="col" sortable="departmentName" (sort)="onSort($event)"><i id="departmentName"></i>Department Name<i class="fa fa-fw fa-sort"></i></th>
+		<th scope="col">Department Name</th>
+		<th scope="col">Delete</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let department of departments" (click)="departmentDetails(department)">
+		<tr  *ngFor="let department of departments | paginate: { itemsPerPage: 7, currentPage: page }" (click)="departmentDetails(department)">
 			<th scope="row">{{ department.id }}</th>
-			<td><ngb-highlight [result]="department.departmentName"></ngb-highlight></td>
+			<td>{{department.departmentName}}</td>
+			<td (click)="deleteDepartment(department)"><i  class="fa fa-remove" style="font-size:16px;color:red"></i></td>
 		</tr>
 	</tbody>
 </table>
 
 <div class="d-flex justify-content-center p-2">
-	<ngb-pagination
-	(pageChange)="onPageChange($event)" [collectionSize]="total" [(page)]="pageNumber" [pageSize]="pageSize">
-	</ngb-pagination>
+	<pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
