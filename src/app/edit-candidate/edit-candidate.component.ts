@@ -44,7 +44,6 @@ export class EditCandidateComponent implements OnInit {
   get form() { return this.createForm.controls; }
 
 	onSubmit() {
-    console.log("SUBMIT");
     this.submitted = true;
     if (this.createForm.invalid) {
       alert("invalid form");

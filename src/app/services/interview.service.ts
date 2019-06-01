@@ -23,7 +23,7 @@ export class InterviewService {
 
     createInterview(interview: Interview, employeesId: number[]): Observable<any> {
         let date: String = '';
-        if(interview.interviewDateTime) date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5) ;
+        if(interview.interviewDateTime) date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5);
         return this.http.put(`${this.baseUrl}?candidateId=${interview.candidate.id}&interviewDateTime=`
             + date + `&status=${interview.status}&employeesId=${employeesId}`
             , interview 
@@ -32,7 +32,11 @@ export class InterviewService {
 
     update(interview: Interview, employeesId: number[]): Observable<any> {
         let date: String = '';
-        if(interview.interviewDateTime) date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5) ;
+        if(interview.interviewDateTime.toISOString) 
+            date = interview.interviewDateTime.toISOString().substr(0, interview.interviewDateTime.toISOString().length-5)
+        else
+            date = interview.interviewDateTime.toString();
+        console.log("UPDATE INTERVIEW ID: " + interview.id);
         return this.http.put(`${this.baseUrl}?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
          + date + `&status=${interview.status}&employeesId=${employeesId}`
             , interview 

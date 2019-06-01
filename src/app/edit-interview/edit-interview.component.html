@@ -2,45 +2,52 @@
 <link href="https://unpkg.com/flatpickr@4.5.7/dist/flatpickr.css" rel="stylesheet">
 
 <div class="container">
-  <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label>Candidate: </label>
-        <ng-select [items]="candidates"
-            bindLabel="firstName"
-            [hideSelected]="true"
-            [(ngModel)]="selectedCandidate"
-            [ngModelOptions]="{standalone: true}">
-            required 
-          </ng-select>
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Candidate: </label>
+      <ng-select formControlName="candidateControl"
+          [items]="candidates"
+          bindLabel="firstName"
+          [hideSelected]="true"
+          [(ngModel)]="selectedCandidate"> 
+        </ng-select>
+      <div *ngIf="submitted && form.candidateControl.errors" class="form-text text-muted">
+          <div *ngIf="form.candidateControl.errors.required">First name is required</div>
       </div>
+    </div>
     <div class="form-group">
       <label>Employees: </label>
-      <ng-select [items]="employees"
+      <ng-select formControlName="employeesControl"
+          [items]="employees"
           bindLabel="firstName"
           bindValue="id"
           [multiple]="true"
           [hideSelected]="true"
-          [(ngModel)]="selectedEmployees"
-          [ngModelOptions]="{standalone: true}">
-          required 
+          [(ngModel)]="selectedEmployees"> 
         </ng-select>
+      <div *ngIf="submitted && form.employeesControl.errors" class="form-text text-muted">
+          <div *ngIf="form.employeesControl.errors.required">First name is required</div>
+      </div>
     </div>
     <div class="form-group">
       <label>Date: </label>
       <input
+        formControlName="dateControl"
         class="form-control"
         type="text"
         mwlFlatpickr
-        [(ngModel)]="date"
+        [(ngModel)]="interview.interviewDateTime"
         [altInput]="true"
         [convertModelValue]="true"
         [enableTime]="true"
         dateFormat="Y-m-dTH:i"
         altFormat="F j, Y H:i"
         placeholder="Not set"
-        [ngModelOptions]="{standalone: true}"
         required
       />
+      <div *ngIf="submitted && form.dateControl.errors" class="form-text text-muted">
+          <div *ngIf="form.dateControl.errors.required">First name is required</div>
+      </div>
     </div>
     <div class="form-group">
       <button [disabled]="loading" class="btn btn-primary">Save</button>

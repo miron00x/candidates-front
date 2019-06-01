@@ -4,7 +4,7 @@ import { Employee } from '../domain/employee';
 import { Observable, Subject, concat, of } from 'rxjs';
 import { Candidate } from '../domain/candidate';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { EmployeeService } from '../services/employee.service';
 import { CandidateService } from '../services/candidate.service';
 import { InterviewService } from '../services/interview.service';
@@ -18,6 +18,7 @@ import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from '
 export class EditInterviewComponent implements OnInit {
 
   @Input() interview: Interview;
+  createForm: FormGroup;
 	message = '';
   error = '';
   loading = false;
@@ -50,6 +51,11 @@ export class EditInterviewComponent implements OnInit {
     this.date = this.interview.interviewDateTime;
     this.fillCandidates();
     this.fillEmployees();
+    this.createForm = this.formBuilder.group({
+      candidateControl: ['', Validators.required],
+      employeesControl: ['', Validators.required],
+      dateControl: ['', Validators.required]
+    });
   }
   
   fillEmployees(){
@@ -62,16 +68,22 @@ export class EditInterviewComponent implements OnInit {
       .subscribe(data => this.candidates=data, error => this.setError(error));
   }
 
+  get form() { return this.createForm.controls; }
+
 	onSubmit() {
     this.submitted = true;
+    if (this.createForm.invalid) {
+        return;
+    }
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
-    console.log(this.interview.id);
     if(!this.interview.id){
-      console.log("CREATE");
       this.interviewService.createInterview(this.interview, this.selectedEmployees)
-      .subscribe(data => this.setMessage(data), 
+      .subscribe(
+        data => {
+          this.setMessage("Ok");
+        },
         error => this.setError(error), 
         () => {
           this.loading = false;
@@ -79,9 +91,8 @@ export class EditInterviewComponent implements OnInit {
         }
       ); 
     } else {
-      console.log("UPDATE");
       this.interviewService.update(this.interview, this.selectedEmployees)
-      .subscribe(data => this.setMessage(data), 
+      .subscribe(data => this.setMessage("Ok"), 
         error => this.setError(error), 
         () => {
           this.loading = false;
