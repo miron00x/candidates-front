@@ -12,7 +12,7 @@
           [(ngModel)]="selectedCandidate"> 
         </ng-select>
       <div *ngIf="submitted && form.candidateControl.errors" class="form-text text-muted">
-          <div *ngIf="form.candidateControl.errors.required">First name is required</div>
+          <div *ngIf="form.candidateControl.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
@@ -26,7 +26,7 @@
           [(ngModel)]="selectedEmployees"> 
         </ng-select>
       <div *ngIf="submitted && form.employeesControl.errors" class="form-text text-muted">
-          <div *ngIf="form.employeesControl.errors.required">First name is required</div>
+          <div *ngIf="form.employeesControl.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
@@ -46,7 +46,7 @@
         required
       />
       <div *ngIf="submitted && form.dateControl.errors" class="form-text text-muted">
-          <div *ngIf="form.dateControl.errors.required">First name is required</div>
+          <div *ngIf="form.dateControl.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">

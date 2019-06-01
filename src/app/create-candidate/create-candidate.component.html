@@ -3,56 +3,56 @@
   <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
 		<div class="form-group">
 			<label>First name: </label>
-			<input class="form-control" type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': form.firstName.errors }">
-      <div *ngIf="submitted && form.firstName.errors" class="invalid-feedback">
-          <div *ngIf="form.firstName.errors.required">First name is required</div>
+			<input class="form-control" type="text" formControlName="firstName" [ngClass]="{ 'is-invalid': form.firstName.errors && submitted}">
+      <div *ngIf="submitted && form.firstName.errors" class="form-text text-muted">
+          <div *ngIf="form.firstName.errors.required">This field is required</div>
       </div>
     </div>  
     <div class="form-group">
       <label>Last name: </label>
-			<input class="form-control" type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': form.lastName.errors }">
-      <div *ngIf="submitted && form.lastName.errors" class="invalid-feedback">
-          <div *ngIf="form.lastName.errors.required">Last name is required</div>
+			<input class="form-control" type="text" formControlName="lastName" [ngClass]="{ 'is-invalid': form.lastName.errors && submitted }">
+      <div *ngIf="submitted && form.lastName.errors" class="form-text text-muted">
+          <div *ngIf="form.lastName.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
       <label>Telephone: </label>
-			<input class="form-control" type="tel" formControlName="telephone" [ngClass]="{ 'is-invalid': form.telephone.errors }">
-      <div *ngIf="submitted && form.telephone.errors" class="invalid-feedback">
-          <div *ngIf="form.skype.errors.required">Phone name is required</div>
+			<input class="form-control" type="tel" formControlName="telephone" [ngClass]="{ 'is-invalid': form.telephone.errors && submitted }">
+      <div *ngIf="submitted && form.telephone.errors" class="form-text text-muted">
+          <div *ngIf="form.telephone.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
       <label>Skype: </label>
-			<input class="form-control" type="text" formControlName="skype" [ngClass]="{ 'is-invalid': form.skype.errors }">
-      <div *ngIf="submitted && form.skype.errors" class="invalid-feedback">
-          <div *ngIf="form.skype.errors.required">Phone name is required</div>
+			<input class="form-control" type="text" formControlName="skype" [ngClass]="{ 'is-invalid': form.skype.errors && submitted }">
+      <div *ngIf="submitted && form.skype.errors" class="form-text text-muted">
+          <div *ngIf="form.skype.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
       <label>Mail: </label>
-			<input class="form-control" type="text" formControlName="mail" [ngClass]="{ 'is-invalid': form.mail.errors }">
-      <div *ngIf="submitted && form.mail.errors" class="invalid-feedback">
-          <div *ngIf="form.mail.errors.required">Phone name is required</div>
+			<input class="form-control" type="text" formControlName="mail" [ngClass]="{ 'is-invalid': form.mail.errors && submitted }">
+      <div *ngIf="submitted && form.mail.errors" class="form-text text-muted">  
+        This field is invalid
       </div>
     </div>
     <div class="form-group">
       <label>Description: </label>
-      <textarea class="form-control" formControlName="description"></textarea>
-      <div *ngIf="submitted && form.description.errors" class="invalid-feedback">
-          <div *ngIf="form.description.errors.required">Phone name is required</div>
+      <textarea class="form-control" formControlName="description" [ngClass]="{ 'is-invalid': form.description.errors && submitted }"></textarea>
+      <div *ngIf="submitted && form.description.errors" class="form-text text-muted">
+          <div *ngIf="form.description.errors.required">This field is required</div>
       </div>
     </div>
     <div class="form-group">
       <label>Attachment: </label><br/>
       <input type="file" ng2FileSelect accept=".docx, .doc" [uploader]="uploader" multiple/>
       <br>
-      <div class="drop-zone">
-      <div ng2FileDrop [uploader]="uploader" class="drop-zone">
+      <div class="border border-info">
+      <div ng2FileDrop [uploader]="uploader" class="border border-dark">
           Drag and drop files to upload
       </div>
       </div>
-      <table class="table table-striped">
+      <table class="table table-sm">
         <thead>
         <tr>
           <th width="90%">

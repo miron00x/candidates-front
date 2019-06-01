@@ -46,7 +46,6 @@ export class EditCandidateComponent implements OnInit {
 	onSubmit() {
     this.submitted = true;
     if (this.createForm.invalid) {
-      alert("invalid form");
         return;
     }
     this.loading = true;

@@ -45,7 +45,7 @@ export class CreateDepartmentComponent implements OnInit {
     this.loading = true;
     this.department.departmentName = this.form.departmentName.value;
     this.departmentService.createDepartment(this.department)
-      .subscribe(data => this.setMessage(data), error => this.setError(error), () => this.loading = false);
+      .subscribe(data => this.setMessage("Ok"), error => this.setError(error), () => this.loading = false);
 	}
 	
 	setMessage(message: string): void {

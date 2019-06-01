@@ -55,7 +55,6 @@ export class CreateEmployeeComponent implements OnInit {
 	onSubmit() {
     this.submitted = true;
     if (this.createForm.invalid) {
-      alert("this.form.departmentName.value");
         return;
     }
     this.loading = true;
@@ -63,7 +62,7 @@ export class CreateEmployeeComponent implements OnInit {
     this.employee.lastName = this.form.lastName.value;
     this.employee.department = this.selectedDepartment;
     this.employeeService.createEmployee(this.employee)
-      .subscribe(data => this.setMessage(data), error => this.setError(error), () => this.loading = false);
+      .subscribe(data => this.setMessage("Ok"), error => this.setError(error), () => this.loading = false);
 	}
 	
 	setMessage(message: string): void {

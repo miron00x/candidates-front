@@ -20,7 +20,7 @@
       <label>Telephone: </label>
 			<input class="form-control" type="tel" formControlName="telephone" [ngClass]="{ 'is-invalid': form.telephone.errors && submitted }">
       <div *ngIf="submitted && form.telephone.errors" class="invalid-feedback">
-          <div *ngIf="form.skype.errors.required">Phone name is required</div>
+          <div *ngIf="form.telephone.errors.required">Phone name is required</div>
       </div>
     </div>
     <div class="form-group">
