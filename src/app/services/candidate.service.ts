@@ -32,12 +32,19 @@ export class CandidateService {
 		return result;
 	}
 
-	updateCandidate(candidate: Candidate): Observable<any> {
-		return this.http.put(`${this.baseUrl}/update`, candidate);
+	updateCandidate(candidate: Candidate, files: File[]): Observable<any> {
+		let formData = new FormData();
+		for (var i = 0; i < files.length; i++) {
+			formData.append("uploadFile", files[i]);
+		}
+		formData.append('candidate', JSON.stringify(candidate));
+		const req = new HttpRequest('PUT', `${this.baseUrl}/update`, formData);
+		let result = this.http.request(req);
+		return result;
 	}
 
 	deleteCandidate(id: number): Observable<any> {
-		let result = this.http.delete(`${this.baseUrl}/delete/${id}`, { responseType: 'text' });
+		let result = this.http.put(`${this.baseUrl}/reset?id=${id}`, { responseType: 'text' });
 		return result;
 	}
 

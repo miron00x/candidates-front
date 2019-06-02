@@ -96,10 +96,10 @@ export class DepartmentListComponent implements OnInit {
     this.departmentService.deleteDepartment(department)
     .subscribe(
       data => {
-        console.log(data);
         this.reloadData();
       },
-      error => this.setError(error));
+      error => this.setError(error)),
+      () => this.reloadData();
   }
   
   reloadData() {

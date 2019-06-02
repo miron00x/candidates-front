@@ -28,17 +28,29 @@ export class EmployeeDetailsComponent implements OnInit {
     private attachmentService: AttachmentService,
     private modal: NgbModal
     ) {
-      employeeService.getEmployee(activateRoute.snapshot.params['id']).subscribe(
-        data => this.employee = data,
-        error => this.error = error
-        );
+      this.reloadData();
      }
 
   ngOnInit() {
   }
 
-  editCandidate(){
+  editEmployee(){
     this.handleEvent("Edit", this.employee);
+  }
+
+  deleteEmployee(){
+    this.employeeService.deleteEmployee(this.employee.id).subscribe(
+      data => this.message = data,
+      error => this.error = error,
+      () => this.router.navigate(["employee-list"])
+    );
+  }
+
+  reloadData(){
+    this.employeeService.getEmployee(this.activateRoute.snapshot.params['id']).subscribe(
+      data => this.employee = data,
+      error => this.error = error
+    );
   }
 
   downloadAttachment(id : string){

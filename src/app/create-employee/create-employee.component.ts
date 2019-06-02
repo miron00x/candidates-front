@@ -47,7 +47,6 @@ export class CreateEmployeeComponent implements OnInit {
 
   updateSelectedValue(event:Department): void{
     this.selectedDepartment = event;
-    console.log(this.selectedDepartment);
   }
 
   get form() { return this.createForm.controls; }

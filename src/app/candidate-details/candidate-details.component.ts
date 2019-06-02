@@ -28,17 +28,30 @@ export class CandidateDetailsComponent implements OnInit {
     private attachmentService: AttachmentService,
     private modal: NgbModal
     ) {
-      candidateService.getCandidate(activateRoute.snapshot.params['id']).subscribe(
-        data => this.candidate = data,
-        error => this.error = error
-        );
-     }
+      
+    }
 
   ngOnInit() {
+    this.reloadData();
+  }
+
+  reloadData(){
+    this.candidateService.getCandidate(this.activateRoute.snapshot.params['id']).subscribe(
+      data => this.candidate = data,
+      error => this.error = error
+      );
   }
 
   editCandidate(){
     this.handleEvent("Edit", this.candidate);
+  }
+
+  deleteCandidate(){
+    this.candidateService.deleteCandidate(this.candidate.id).subscribe(
+      data => this.message = data,
+      error => this.error = error,
+      () => this.router.navigate(["candidate-list"])
+    );
   }
 
   downloadAttachment(id : string){

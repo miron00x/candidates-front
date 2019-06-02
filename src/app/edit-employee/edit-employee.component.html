@@ -16,6 +16,15 @@
           <div *ngIf="form.lastName.errors.required">Last name is required</div>
       </div>
     </div>
+    <div class="form-group">
+      <label>Department: </label>
+      <select class="form-control" id="departmentName" [compareWith]="compareDepartments" formControlName="departmentName" [(ngModel)]="selectedDepartment" [ngClass]="{ 'is-invalid': form.departmentName.errors && submitted }" (ngModelChange)="updateSelectedValue($event)">
+        <option *ngFor="let dep of departments" [(ngValue)]="dep">{{dep.departmentName}}</option>
+      </select>
+      <div *ngIf="submitted && form.departmentName.errors" class="form-text text-muted">
+          <div *ngIf="form.departmentName.errors.required">This field is required</div>
+      </div>
+    </div>
     <!--
     <div class="form-group">
       <label>Description: </label>

@@ -27,7 +27,7 @@ export class EmployeeService {
 	}
 
 	deleteEmployee(id: number): Observable<any> {
-		let result = this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+		let result = this.http.put(`${this.baseUrl}/reset?id=${id}`, { responseType: 'text' });
 		return result;
 	}
 

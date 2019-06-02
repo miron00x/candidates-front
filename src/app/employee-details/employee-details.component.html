@@ -1,7 +1,10 @@
 <h3 class="text-primary text-center">
   Employee Details
   <button class="btn btn-primary pull-right" (click)="editEmployee()">
-    Edit employee
+    Edit
+  </button>
+  <button class="btn btn-danger pull-right" (click)="deleteEmployee()">
+    Delete
   </button>
   <div class="clearfix"></div>
 </h3>
@@ -62,18 +65,18 @@
 <div *ngIf="error" class="alert alert-danger">{{error}}</div>
 
 <ng-template #modalContent let-close="close">
-    <div class="modal-header">
-      <h5 class="modal-title">{{ modalData?.action }}</h5>
-      <button type="button" class="close" (click)="close(); reloadData()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div *ngIf="modalData?.employee"><app-edit-employee [employee]="modalData?.employee"></app-edit-employee></div>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="close(); reloadData()">
-        OK
-      </button>
-    </div>
-  </ng-template>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalData?.action }}</h5>
+    <button type="button" class="close" (click)="close(); reloadData()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div *ngIf="modalData?.employee"><app-edit-employee [employee]="modalData?.employee"></app-edit-employee></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close(); reloadData()">
+      OK
+    </button>
+  </div>
+</ng-template>

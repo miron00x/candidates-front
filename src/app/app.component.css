@@ -146,6 +146,7 @@ background: linear-gradient(to right, #ff767a, #e52d27); /* W3C, IE 10+/ Edge, F
   right: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 

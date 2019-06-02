@@ -67,8 +67,8 @@ export class EditCandidateComponent implements OnInit {
     this.candidate.mail = this.form.mail.value;
     this.candidate.skype = this.form.skype.value;
     this.candidate.description = this.form.description.value;
-    this.candidateService.updateCandidate(this.candidate)
-      .subscribe(data => this.setMessage(data), error => this.setError(error), () => {this.loading = false});
+    this.candidateService.updateCandidate(this.candidate, files)
+      .subscribe(data => this.setMessage("Ok"), error => this.setError(error), () => {this.loading = false});
 	}
 	
 	setMessage(message: string): void {

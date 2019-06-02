@@ -37,12 +37,12 @@ export class DepartmentService {
     }
 
     deleteDepartment(department: Department): Observable<any> {
-      let result = this.http.delete(`${this.baseUrl}` + `/delete`);
+      let result = this.http.put(`${this.baseUrl}/reset?id=${department.id}`, department);
       return result;
     }
 
     deleteAll(): Observable<any> {
-      let result = this.http.delete(`${this.baseUrl}` + `/delete`);
+      let result = this.http.put(`${this.baseUrl}` + `/delete`, "LOL");
       return result;
     }
     

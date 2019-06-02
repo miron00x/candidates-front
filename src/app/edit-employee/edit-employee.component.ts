@@ -3,6 +3,8 @@ import { Employee } from '../domain/employee';
 import { EmployeeService } from '../services/employee.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Department } from '../domain/department';
+import { DepartmentService } from '../services/department.service';
 
 @Component({
   selector: 'app-edit-employee',
@@ -17,6 +19,9 @@ export class EditEmployeeComponent implements OnInit {
   error = '';
   loading = false;
   submitted = false;
+  
+  selectedDepartment: Department;
+  departments: Array<Department> = [];
 
   /*
   public uploader:FileUploader = new FileUploader({
@@ -28,17 +33,35 @@ export class EditEmployeeComponent implements OnInit {
 		private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private employeeService: EmployeeService
+    private employeeService: EmployeeService,
+    private departmentService: DepartmentService
   ) { }
 
 	ngOnInit() {
+    this.fillDepartaments();
     this.createForm = this.formBuilder.group({
       firstName: [this.employee.firstName, Validators.required],
-      lastName: [this.employee.lastName, Validators.required]
+      lastName: [this.employee.lastName, Validators.required],
+      departmentName: [this.employee.department, Validators.required]
     });
   }
 
   get form() { return this.createForm.controls; }
+
+  fillDepartaments(){
+    this.departmentService.getAll()
+      .subscribe(data => this.departments=data, error => this.setError(error));
+    this.selectedDepartment = this.employee.department;
+  }
+
+  compareDepartments(val1, val2): boolean {
+    return val1 && val2 ? val1.id === val2.id : val1 === val2;
+  }
+
+  updateSelectedValue(event:Department): void{
+    this.selectedDepartment = event;
+    console.log(this.form.departmentName.value);
+  }
 
 	onSubmit() {
     this.submitted = true;
@@ -62,6 +85,7 @@ export class EditEmployeeComponent implements OnInit {
     */
     this.employee.firstName = this.form.firstName.value;
     this.employee.lastName = this.form.lastName.value;
+    this.employee.department = this.selectedDepartment;
     this.employeeService.updateEmployee(this.employee)
       .subscribe(data => this.setMessage(data), error => this.setError(error), () => {this.loading = false});
 	}
