@@ -75,6 +75,7 @@ export class CreateInterviewComponent implements OnInit {
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
     this.interview.interviewDateTime = this.date;
+    console.log(this.interview);
     this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(data => this.setMessage(data), 
         error => this.setError(error), 

@@ -77,7 +77,8 @@ export class EditInterviewComponent implements OnInit {
     }
     this.loading = true;
     this.interview.candidate = this.selectedCandidate;
-    this.interview.interviewDateTime = this.date;
+    //this.interview.interviewDateTime = this.date;
+    console.log(this.interview);
     if(!this.interview.id){
       this.interviewService.createInterview(this.interview, this.selectedEmployees)
       .subscribe(

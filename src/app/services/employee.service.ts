@@ -23,7 +23,7 @@ export class EmployeeService {
 	}
 
 	updateEmployee(employee: Employee): Observable<any> {
-		return this.http.put(`${this.baseUrl}?id=${employee.id}&firstName=${employee.firstName}&lastName=${employee.lastName}&departmentId=${employee.department.id}`, employee);
+		return this.http.put(`${this.baseUrl}/update?id=${employee.id}&firstName=${employee.firstName}&lastName=${employee.lastName}&departmentId=${employee.department.id}`, employee);
 	}
 
 	deleteEmployee(id: number): Observable<any> {

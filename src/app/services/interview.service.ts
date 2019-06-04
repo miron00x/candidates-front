@@ -37,7 +37,7 @@ export class InterviewService {
         else
             date = interview.interviewDateTime.toString();
         console.log("UPDATE INTERVIEW ID: " + interview.id);
-        return this.http.put(`${this.baseUrl}?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
+        return this.http.put(`${this.baseUrl}/update?id=${interview.id}&candidateId=${interview.candidate.id}&interviewDateTime=`
          + date + `&status=${interview.status}&employeesId=${employeesId}`
             , interview 
         );
